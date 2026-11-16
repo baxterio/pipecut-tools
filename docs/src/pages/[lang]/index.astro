@@ -1,0 +1,54 @@
+---
+// Fichier de routage : aucune interface ici. Il charge les textes de la langue, calcule la timeline
+// de la séquence, remplit le <head> et affiche HomePage.
+import { DownloadMenuButton } from "../../components/molecules/DownloadMenuButton";
+import { ShareButton } from "../../components/molecules/ShareButton";
+import { HomePage } from "../../components/pages/HomePage";
+import { heroTitle, LANGUAGES, languageFromPath, languagePath, shareLabels, translator } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { buildTimeline } from "../../lib/sequence";
+import { appVersion, DOWNLOAD_URLS, languageUrl, SITE_DOMAIN, SITE_NAME, shareUrl } from "../../lib/site";
+
+export function getStaticPaths() {
+  return LANGUAGES.map((language) => ({ params: { lang: languagePath(language) } }));
+}
+
+const language = languageFromPath(Astro.params.lang ?? "");
+// getStaticPaths ne produit que les langues du site : toute autre valeur est une erreur de routage
+if (!language) {
+  throw new Error(`Langue inconnue : ${Astro.params.lang}`);
+}
+const t = translator(language);
+const timeline = buildTimeline(heroTitle(t));
+const url = shareUrl(language);
+// l'aperçu du panneau Partager reprend ce que les réseaux afficheront : le nom, l'accroche, le domaine
+const preview = { title: SITE_NAME, description: t("hero.tagline.promise"), domain: SITE_DOMAIN };
+// numéro de version de l'app, fourni au build ; sans lui, le menu Télécharger n'en affiche pas
+const version = appVersion(process.env.PIPECUT_VERSION);
+---
+
+<BaseLayout language={language} canonical={languageUrl(language)}>
+  <HomePage language={language} t={t} timeline={timeline}>
+    {/* les deux îles hydratées de la page : elles doivent être déclarées ici pour qu'Astro puisse les hydrater */}
+    <ShareButton
+      slot="share"
+      client:idle
+      labels={shareLabels(t)}
+      preview={preview}
+      url={url}
+      text={t("share.text")}
+    />
+    <DownloadMenuButton
+      slot="download"
+      client:idle
+      label={t("header.download")}
+      title={t("download.title")}
+      closeLabel={t("common.close")}
+      choices={[
+        { label: t("download.mac"), requirement: t("download.macRequirement"), href: DOWNLOAD_URLS.mac },
+        { label: t("download.windows"), requirement: t("download.windowsRequirement"), href: DOWNLOAD_URLS.windows },
+      ]}
+      mentions={version ? t("download.freeWithVersion", { version }) : t("hero.free")}
+    />
+  </HomePage>
+</BaseLayout>

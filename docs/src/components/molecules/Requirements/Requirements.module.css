@@ -1,0 +1,24 @@
+.mentions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* la spec annonce 6 px ; la capture de référence en montre 8, que l'on reprend */
+  gap: 8px;
+}
+
+.free,
+.requirements {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.free {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* 13 px : la plus petite taille où le texte tertiaire reste assez contrasté sur le fond de page */
+.requirements {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+}

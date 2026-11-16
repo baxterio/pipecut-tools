@@ -1,0 +1,33 @@
+/* panneau Télécharger : 300 px de large, 14 px entre ses blocs */
+.download {
+  --popover-width: 300px;
+  --popover-gap: 14px;
+}
+
+/*
+ * Petite flèche de 14 px après le libellé, au trait plus épais que les autres icônes. Ses marges
+ * négatives la serrent contre le libellé (6 px) et contre le bord droit du bouton (12 px).
+ */
+.download .chevron {
+  margin: 0 -4px 0 -2px;
+  stroke-width: 2.4;
+  transition: transform var(--transition-fast);
+}
+
+/* panneau ouvert : la flèche se retourne vers le haut */
+.download [aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Très petit téléphone : le bouton perd sa flèche, pour tenir sur la ligne à côté de la marque */
+@media (max-width: 350px) {
+  .download .chevron {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .download .chevron {
+    transition: none;
+  }
+}

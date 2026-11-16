@@ -1,0 +1,23 @@
+/* Sans animation, le bandeau et toutes ses lettres sont visibles : c'est l'état final. */
+.band {
+  display: inline-block;
+  padding: 0.02em 0.16em 0.08em;
+  border-radius: 0.08em;
+  background: var(--color-subtitle-band);
+  color: var(--color-yellow);
+  line-height: 1;
+  /* le bandeau apparaît d'un coup, vide et déjà à sa largeur finale */
+  animation: global(sequence-appear) 1ms step-start var(--seq-band-at) backwards;
+}
+
+/* chaque lettre apparaît d'un coup, sans fondu, un pas après la précédente */
+.character {
+  animation: global(sequence-appear) 1ms step-start calc(var(--seq-type-at) + var(--i) * var(--seq-type-step)) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band,
+  .character {
+    animation: none;
+  }
+}

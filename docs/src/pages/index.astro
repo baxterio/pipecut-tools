@@ -1,0 +1,28 @@
+---
+// Racine du site : elle envoie chaque navigateur vers sa langue, l'anglais à défaut. Elle garde le
+// <head> de la langue de référence, parce que c'est l'adresse partagée (https://pipecut.app) et que
+// les réseaux sociaux lisent ses balises d'aperçu. Elle ne redirige que par script : une balise de
+// redirection, que certains robots suivent, leur ferait lire l'aperçu d'une autre page.
+import { LanguagePage } from "../components/pages/LanguagePage";
+import { languageLinks, REFERENCE_LANGUAGE, translator } from "../i18n";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ROOT_URL } from "../lib/site";
+
+const t = translator(REFERENCE_LANGUAGE);
+---
+
+<BaseLayout language={REFERENCE_LANGUAGE} canonical={ROOT_URL}>
+  {/*
+    Sans JavaScript, la langue du navigateur est inconnue : la page propose de la choisir. Avec, elle
+    reste vide le temps de la redirection, plutôt que d'afficher un instant une liste en français.
+  */}
+  <noscript>
+    <LanguagePage label={t("footer.languages")} languages={languageLinks()} />
+  </noscript>
+  <script>
+    import { rootRedirect } from "../i18n/languages";
+
+    // la langue vient des préférences du navigateur ; l'adresse d'origine garde ses paramètres et son ancre
+    location.replace(rootRedirect(navigator.languages) + location.search + location.hash);
+  </script>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+// Carte d'aperçu de lien d'une langue : la page que `pnpm og` photographie pour écrire
+// public/og/<langue>.png. Elle n'existe que sur le serveur de développement : le build ne la publie pas.
+import { SocialCard } from "../../components/organisms/SocialCard";
+import { heroTitle, LANGUAGES, languageFromPath, languagePath, translator } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { languageUrl } from "../../lib/site";
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? LANGUAGES.map((language) => ({ params: { lang: languagePath(language) } })) : [];
+}
+
+const language = languageFromPath(Astro.params.lang ?? "");
+if (!language) {
+  throw new Error(`Langue inconnue : ${Astro.params.lang}`);
+}
+const t = translator(language);
+---
+
+<BaseLayout language={language} canonical={languageUrl(language)}>
+  <SocialCard title={heroTitle(t)} tagline={t("hero.tagline.promise")} />
+</BaseLayout>

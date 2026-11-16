@@ -1,0 +1,69 @@
+/* Une colonne centrée, 1100 px au plus, 28 px entre les blocs */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  /* 88 px en haut sur grand écran (la spec en prévoyait 120, jugés trop bas), moins sur téléphone */
+  padding: clamp(56px, 10vw, 88px) 24px 96px;
+  text-align: center;
+}
+
+/*
+ * L'accroche, les boutons, les mentions et le lien vidéo apparaissent ensemble : fondu, montée de
+ * 28 px et flou de 10 px qui se dissipe. Sans animation, ils sont visibles : c'est l'état final.
+ * L'animation ne garde pas sa dernière image (`backwards`) : une fois jouée, elle ne laisse ni filtre
+ * ni transformation sur le bloc, qui redevient un bloc ordinaire.
+ */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  animation: reveal var(--seq-content-for) var(--ease-soft) var(--seq-content-at) backwards;
+}
+
+.tagline {
+  max-width: 600px;
+  margin: 0;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+/* sur écran étroit, une ligne trop longue se coupe en deux moitiés égales plutôt qu'en laissant un mot seul */
+.taglineLine {
+  display: block;
+  text-wrap: balance;
+}
+
+.downloads {
+  margin-top: 4px;
+}
+
+/* le lien vidéo est 8 px plus bas que l'espacement courant */
+.video {
+  margin-top: 8px;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
+}

@@ -1,0 +1,77 @@
+/*
+ * Couleurs et constantes du site (spec, section 1). Thème sombre uniquement.
+ * Les composants n'écrivent jamais en dur une couleur, une ombre ou une valeur partagée : ils lisent
+ * ces variables.
+ */
+:root {
+  /* Fonds et bordures */
+  --color-bg: #18181d;
+  --color-header-bg: rgba(38, 38, 45, 0.92);
+  --color-border: #3a3a44;
+  --color-border-strong: #44444f;
+
+  /* Textes */
+  --color-text: #f4f4f6;
+  --color-text-secondary: #a6a6b2;
+  --color-text-tertiary: #8c8c98;
+
+  /* Accent (boutons) et corail (texte et liens) */
+  --color-accent: #cf4527;
+  --color-accent-hover: #e05434;
+  --color-on-accent: #ffffff;
+  --color-coral: #ff9a6b;
+  --color-coral-hover: #ffb892;
+  /* fond des pastilles d'icône corail (menu Télécharger) */
+  --color-coral-tint: rgba(240, 110, 70, 0.15);
+  /* halo coloré sous le logo du haut de page et sous les grands boutons */
+  --color-accent-glow: color-mix(in srgb, var(--color-accent) 35%, transparent);
+
+  /* Titre animé */
+  --color-green: #3dd68c;
+  --color-fill-empty: #3a3a44;
+  --color-yellow: #ffd43b;
+  --color-subtitle-band: #2a2a30;
+
+  /* Logo : le dégradé lui est réservé */
+  --color-logo-start: #ff6b6b;
+  --color-logo-end: #d63a4a;
+  --color-logo-cut: #ffc4c0;
+  --color-logo-mark: #ffffff;
+
+  /* Boutons du header et leurs panneaux (menus Partager et Télécharger) */
+  --color-ghost-hover: #31313a;
+  --color-ghost-open-border: #4a4a55;
+  --color-panel-bg: #2a2a31;
+  --color-panel-inset: #1c1c21;
+  --color-panel-inset-border: #34343d;
+  --color-panel-button: #31313a;
+  --color-panel-button-hover: #383842;
+  --color-on-green: #0e0e11;
+
+  /* Couleurs officielles des réseaux, réservées à leurs icônes */
+  --color-brand-x: #000000;
+  --color-brand-bluesky: #1185fe;
+  --color-brand-facebook: #0866ff;
+  --color-brand-whatsapp: #25d366;
+  --color-brand-linkedin: #0a66c2;
+  --color-brand-telegram: #26a5e4;
+  --color-on-brand: #ffffff;
+
+  /* Ombres portées : sous le header, sous les panneaux */
+  --shadow-header: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-panel: 0 24px 60px rgba(0, 0, 0, 0.55);
+
+  /* Mouvements : changement d'état au survol, et courbe douce des apparitions */
+  --transition-fast: 0.15s ease;
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Plus petite cible tactile (règles d'Apple) */
+  --touch-target: 44px;
+  /* Arrondi des boutons et des champs à l'intérieur des panneaux */
+  --radius-control: 10px;
+
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* 60 px de contenu, plus 1 px de bordure basse */
+  --header-height: 61px;
+}

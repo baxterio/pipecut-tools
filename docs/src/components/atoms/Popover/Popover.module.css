@@ -1,0 +1,202 @@
+/* L'enveloppe du bouton et de son panneau : le repère de position du panneau et de sa pointe */
+.anchor {
+  position: relative;
+  display: inline-flex;
+}
+
+/*
+ * Le panneau s'ouvre 24 px sous le bouton qui le commande, aligné sur sa droite. Sa largeur (bordure
+ * comprise) et l'espacement de ses blocs sont fixés par le menu, sur l'enveloppe : --popover-width et
+ * --popover-gap.
+ */
+.panel {
+  position: absolute;
+  top: calc(100% + 24px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: var(--popover-gap);
+  width: var(--popover-width);
+  /* sur un écran peu haut, le panneau défile plutôt que de sortir de l'écran */
+  max-height: calc(100dvh - var(--header-height) - 27px);
+  padding: 18px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 16px;
+  background: var(--color-panel-bg);
+  box-shadow: var(--shadow-panel);
+  color: var(--color-text);
+  text-align: left;
+  /* le panneau se déploie depuis son coin haut droit, côté bouton */
+  transform-origin: top right;
+}
+
+/*
+ * Le panneau et sa pointe apparaissent en douceur : fondu, légère descente et léger agrandissement.
+ * Ils disparaissent de la même façon, plus vite. Sans animation, ils sont affichés tels quels.
+ * L'entrée ne garde pas sa dernière image : une fois jouée, elle ne laisse aucune transformation.
+ */
+.panel,
+.pointer {
+  animation: popover-in 0.22s var(--ease-soft);
+}
+
+/*
+ * Fermé, le panneau reste affiché le temps de sa sortie. Il est alors inerte (attribut posé par le
+ * composant) : il ne réagit plus ni aux clics ni au clavier. La sortie garde sa dernière image
+ * (`forwards`) : le panneau reste invisible jusqu'à ce qu'il quitte la page.
+ */
+.panel[data-leaving],
+.pointer[data-leaving] {
+  animation: popover-out 0.15s ease-in forwards;
+}
+
+/* translate et scale s'ajoutent à la rotation de la pointe, que transform continue de porter */
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+    scale: 0.97;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes popover-out {
+  from {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    translate: 0 -4px;
+    scale: 0.98;
+  }
+}
+
+/* mouvement réduit : ni entrée ni sortie animées, le panneau s'affiche et disparaît d'un coup */
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .pointer,
+  .panel[data-leaving],
+  .pointer[data-leaving] {
+    animation: none;
+  }
+}
+
+/* le panneau reçoit le focus à l'ouverture : pas de contour autour de tout le panneau */
+.panel:focus {
+  outline: none;
+}
+
+/*
+ * Petite pointe qui relie le panneau au bouton : un carré de 12 px tourné de 45°, centré sous le
+ * bouton, à cheval sur le bord haut du panneau. Ses deux côtés du haut portent la bordure du panneau.
+ */
+.pointer {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: calc(50% - 6px);
+  z-index: 21;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-border-strong);
+  border-right: 0;
+  border-bottom: 0;
+  background: var(--color-panel-bg);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+/* En-tête : le titre à gauche, la croix à droite */
+.header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 32px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/*
+ * Croix de 16 px dans une cible de 44 × 44 px (règles d'Apple). Ses marges négatives la laissent
+ * dépasser de l'en-tête, qui garde ses 32 px de haut.
+ */
+.close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  margin: -6px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.close:hover {
+  background: var(--color-panel-button);
+  color: var(--color-text);
+}
+
+/*
+ * Rangée cliquable d'un panneau (un réseau du menu Partager, un système du menu Télécharger) : un fond
+ * plus clair que le panneau, qui s'éclaircit encore au survol. Chaque menu y ajoute ses dimensions.
+ */
+.item {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-control);
+  background: var(--color-panel-button);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.item:hover {
+  background: var(--color-panel-button-hover);
+}
+
+/*
+ * Écran étroit : le panneau ne tiendrait plus à gauche du bouton. Il se cale sur le bord droit de
+ * l'écran et se réduit s'il le faut. À cette largeur, les boutons du header font 44 px de haut : le
+ * panneau reste 24 px sous eux, soit 15 px sous le header.
+ */
+@media (max-width: 600px) {
+  .panel {
+    position: fixed;
+    top: calc(var(--header-height) + 15px);
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-width: var(--popover-width);
+    margin-left: auto;
+  }
+}
+
+/* Très petit écran : marges resserrées, pour laisser au contenu toute la largeur possible */
+@media (max-width: 380px) {
+  .panel {
+    right: 8px;
+    left: 8px;
+    padding: 14px;
+  }
+}

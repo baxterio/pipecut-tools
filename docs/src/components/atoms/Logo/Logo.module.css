@@ -1,0 +1,22 @@
+.logo {
+  display: block;
+  flex: none;
+}
+
+.gradientStart {
+  stop-color: var(--color-logo-start);
+}
+
+.gradientEnd {
+  stop-color: var(--color-logo-end);
+}
+
+.cutPart {
+  fill: var(--color-logo-cut);
+  stroke: var(--color-logo-cut);
+}
+
+.mark {
+  fill: var(--color-logo-mark);
+  stroke: var(--color-logo-mark);
+}

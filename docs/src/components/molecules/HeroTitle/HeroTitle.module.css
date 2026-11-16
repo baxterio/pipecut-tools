@@ -1,0 +1,17 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.06em;
+  margin: 0;
+  font-size: clamp(44px, 8.2vw, 120px);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+/* un mot par ligne, quelle que soit la largeur d'écran */
+.line {
+  display: block;
+  white-space: nowrap;
+}

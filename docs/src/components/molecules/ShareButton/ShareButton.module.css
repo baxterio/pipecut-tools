@@ -1,0 +1,12 @@
+/* panneau Partager : 360 px de large, 16 px entre ses blocs */
+.share {
+  --popover-width: 360px;
+  --popover-gap: 16px;
+}
+
+/* Écran étroit : le bouton ne garde que son icône. Son nom, lu par les lecteurs d'écran, ne change pas. */
+@media (max-width: 480px) {
+  .label {
+    display: none;
+  }
+}

@@ -1,0 +1,111 @@
+/*
+ * Les styles hors animation décrivent l'état final (triangle coupé) : c'est ce qui s'affiche
+ * directement quand les animations sont réduites, et ce qui reste à la fin de la séquence. Les
+ * animations ne gardent pas leur dernière image (`backwards`) : une fois jouées, elles ne laissent
+ * ni transformation ni filtre sur les éléments.
+ *
+ * Les formes et leurs couleurs viennent de l'atome Logo : cette feuille ne règle que les calques.
+ */
+.logo {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(0 20px 40px var(--color-accent-glow));
+  animation: logo-in var(--seq-logo-in-for) ease-out var(--seq-logo-in-at) backwards;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Partie coupée : masquée par le grand triangle jusqu'à la coupe, puis saute et rebondit */
+.cutPart {
+  transform-origin: 52% 54%;
+  animation:
+    global(sequence-appear) 1ms step-start var(--seq-logo-cut-at) backwards,
+    cut-part var(--seq-logo-cut-for) ease-out var(--seq-logo-cut-at) backwards;
+}
+
+/* Petit triangle blanc : se contracte au moment de la coupe */
+.mark {
+  transform-origin: 45% 43%;
+  animation:
+    global(sequence-appear) 1ms step-start var(--seq-logo-cut-at) backwards,
+    mark var(--seq-logo-cut-for) ease-out var(--seq-logo-cut-at) backwards;
+}
+
+/*
+ * Grand triangle blanc entier : visible jusqu'à la coupe, puis masqué d'un coup.
+ * step-start, et non step-end : le palier est franchi au début de l'animation. Avec step-end, il ne
+ * le serait qu'à une progression de exactement 1, que le navigateur n'atteint pas toujours (arrondi
+ * du délai + durée).
+ */
+.whole {
+  opacity: 0;
+  animation: disappear 1ms step-start var(--seq-logo-cut-at) backwards;
+}
+
+@keyframes logo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* sur 0,24 s (2,01 s → 2,25 s en français) : saut à 0,05 s, rebond à 0,15 s, retour en place à 0,24 s */
+@keyframes cut-part {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20.83% {
+    transform: translate(6px, 6px) rotate(5deg);
+  }
+  62.5% {
+    transform: translate(-1px, -1px) rotate(-1deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/* contraction à 90 % à 0,04 s, retour à 0,17 s */
+@keyframes mark {
+  0% {
+    transform: scale(1);
+  }
+  16.67% {
+    transform: scale(0.9);
+  }
+  70.83%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .cutPart,
+  .mark,
+  .whole {
+    animation: none;
+  }
+}

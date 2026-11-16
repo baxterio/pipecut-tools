@@ -1,0 +1,80 @@
+/*
+ * La ligne de coupe va de 64 % de la hauteur du mot, à gauche, à 40 %, à droite. Elle est exprimée
+ * en pourcentage du mot : elle tombe au même endroit quelle que soit sa longueur. Les découpes
+ * débordent de la boîte (-10 % → 110 %, le long de la même droite) pour ne rogner ni les jambages
+ * ni le dernier caractère.
+ *
+ * Sans animation, le mot est déjà coupé : c'est l'état final.
+ */
+.cut {
+  position: relative;
+  display: inline-block;
+  color: var(--color-text);
+  animation: cut-in var(--seq-cut-in-for) ease-out var(--seq-cut-in-at) backwards;
+}
+
+/* Moitié basse : le mot entier jusqu'à la coupe, puis seulement ce qui est sous la ligne */
+.bottom {
+  display: block;
+  clip-path: polygon(-10% 66.4%, 110% 37.6%, 110% 150%, -10% 150%);
+  animation: cut-bottom 1ms step-start var(--seq-cut-at) backwards;
+}
+
+/* Moitié haute : apparaît à la coupe, saute puis se cale, décalée */
+.top {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(-10% -50%, 110% -50%, 110% 37.6%, -10% 66.4%);
+  transform: translate(0.06em, -0.045em) rotate(-1deg);
+  pointer-events: none;
+  user-select: none;
+  animation:
+    global(sequence-appear) 1ms step-start var(--seq-cut-at) backwards,
+    cut-top var(--seq-cut-for) ease-out var(--seq-cut-at) backwards;
+}
+
+/* le mot de la moitié haute vient de son attribut data-text, pas du HTML */
+.top::before {
+  content: attr(data-text);
+}
+
+@keyframes cut-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.12em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cut-bottom {
+  from {
+    clip-path: polygon(-10% -50%, 110% -50%, 110% 150%, -10% 150%);
+  }
+  to {
+    clip-path: polygon(-10% 66.4%, 110% 37.6%, 110% 150%, -10% 150%);
+  }
+}
+
+/* Tchac, sur 0,25 s : le saut culmine à 0,12 s, puis la moitié haute se cale */
+@keyframes cut-top {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  48% {
+    transform: translate(0.11em, -0.09em) rotate(-1.8deg);
+  }
+  100% {
+    transform: translate(0.06em, -0.045em) rotate(-1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cut,
+  .bottom,
+  .top {
+    animation: none;
+  }
+}

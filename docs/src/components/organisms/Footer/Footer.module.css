@@ -1,0 +1,5 @@
+/* séparé du reste de la page par un filet, comme le header */
+.footer {
+  padding: 24px 24px 40px;
+  border-top: 1px solid var(--color-border);
+}

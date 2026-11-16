@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "PipeCut: download, cut and caption your videos for X",
+    "description": "$t(hero.tagline.promise) $t(hero.tagline.how) Free, no account, for Mac and Windows.",
+    "ogTitle": "PipeCut: download, cut, caption",
+    "ogImageAlt": "PipeCut: $t(hero.title.download) $t(hero.title.cut) $t(hero.title.subtitle)"
+  },
+  "common": {
+    "close": "Close"
+  },
+  "header": {
+    "home": "PipeCut, back to top",
+    "share": "Share",
+    "download": "Download"
+  },
+  "hero": {
+    "title": {
+      "download": "Download.",
+      "cut": "Cut.",
+      "subtitle": "Caption."
+    },
+    "tagline": {
+      "promise": "The right clip, in the right format, ready to post.",
+      "how": "Paste a link, PipeCut handles the rest."
+    },
+    "downloadMac": "Download for Mac",
+    "downloadWindows": "Download for Windows",
+    "free": "Free · No account",
+    "requirements": "Mac with Apple silicon (M1 or later) · Windows 10 and 11",
+    "watchVideo": "Watch PipeCut in one minute"
+  },
+  "share": {
+    "title": "Share PipeCut",
+    "text": "PipeCut: download, cut and caption your videos for X, right on your computer.",
+    "networks": "On social media",
+    "copyHeading": "Or copy the link",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "newTab": "(new tab)"
+  },
+  "download": {
+    "title": "Download PipeCut",
+    "mac": "For Mac",
+    "macRequirement": "Apple silicon (M1 or later)",
+    "windows": "For Windows",
+    "windowsRequirement": "Windows 10 and 11",
+    "freeWithVersion": "$t(hero.free) · v{{version}}"
+  },
+  "footer": {
+    "languages": "Language"
+  }
+}

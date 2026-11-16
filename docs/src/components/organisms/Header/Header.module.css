@@ -1,0 +1,52 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-header-bg);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-header);
+}
+
+/* contenu centré dans 1200 px au plus, avec 24 px de marge de chaque côté */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1200px, 100% - 48px);
+  height: 100%;
+  margin: 0 auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+@media (max-width: 480px) {
+  .actions {
+    gap: 10px;
+  }
+}
+
+/* Très petit téléphone : marges resserrées, pour que la marque et les deux boutons tiennent sur la ligne */
+@media (max-width: 350px) {
+  .inner {
+    width: calc(100% - 32px);
+  }
+}

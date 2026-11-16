@@ -1,0 +1,50 @@
+---
+import "@fontsource-variable/inter/wght.css";
+import "../styles/tokens.css";
+import "../styles/global.css";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import { type Language, LANGUAGES, translator } from "../i18n";
+import { languageUrl, OG_IMAGE, ogImageUrl, ROOT_URL, SITE_NAME } from "../lib/site";
+import { token } from "../lib/tokens";
+
+interface Props {
+  /** Langue de la page : celle de ses textes et de ses balises. */
+  language: Language;
+  /** Adresse canonique de la page. */
+  canonical: string;
+}
+
+const { language, canonical } = Astro.props;
+const t = translator(language);
+---
+
+<!doctype html>
+<html lang={language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t("meta.title")}</title>
+    <meta name="description" content={t("meta.description")} />
+    <link rel="canonical" href={canonical} />
+    {LANGUAGES.map((other) => <link rel="alternate" hreflang={other} href={languageUrl(other)} />)}
+    <link rel="alternate" hreflang="x-default" href={ROOT_URL} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content={token("--color-bg")} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={t("meta.ogTitle")} />
+    {/* la description des aperçus de lien reprend l'accroche */}
+    <meta property="og:description" content={t("hero.tagline.promise")} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl(language)} />
+    <meta property="og:image:width" content={String(OG_IMAGE.width)} />
+    <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+    <meta property="og:image:alt" content={t("meta.ogImageAlt")} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

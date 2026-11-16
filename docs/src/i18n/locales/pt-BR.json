@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "PipeCut: baixe, corte e legende seus vídeos para o X",
+    "description": "$t(hero.tagline.promise) $t(hero.tagline.how) Grátis, sem conta, para Mac e Windows.",
+    "ogTitle": "PipeCut: baixe, corte, legende",
+    "ogImageAlt": "PipeCut: $t(hero.title.download) $t(hero.title.cut) $t(hero.title.subtitle)"
+  },
+  "common": {
+    "close": "Fechar"
+  },
+  "header": {
+    "home": "PipeCut, voltar ao início da página",
+    "share": "Compartilhar",
+    "download": "Baixar"
+  },
+  "hero": {
+    "title": {
+      "download": "Baixe.",
+      "cut": "Corte.",
+      "subtitle": "Legende."
+    },
+    "tagline": {
+      "promise": "O trecho certo, no formato certo, pronto para postar.",
+      "how": "Cole um link, o PipeCut cuida do resto."
+    },
+    "downloadMac": "Baixar para Mac",
+    "downloadWindows": "Baixar para Windows",
+    "free": "Grátis · Sem conta",
+    "requirements": "Mac com chip da Apple (M1 ou posterior) · Windows 10 e 11",
+    "watchVideo": "Veja o PipeCut em um minuto"
+  },
+  "share": {
+    "title": "Compartilhar o PipeCut",
+    "text": "PipeCut: baixe, corte e legende seus vídeos para o X, no seu computador.",
+    "networks": "Nas redes sociais",
+    "copyHeading": "Ou copie o link",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyLink": "Copiar o link",
+    "linkCopied": "Link copiado",
+    "newTab": "(nova aba)"
+  },
+  "download": {
+    "title": "Baixar o PipeCut",
+    "mac": "Para Mac",
+    "macRequirement": "Chip da Apple (M1 ou posterior)",
+    "windows": "Para Windows",
+    "windowsRequirement": "Windows 10 e 11",
+    "freeWithVersion": "$t(hero.free) · v{{version}}"
+  },
+  "footer": {
+    "languages": "Idioma"
+  }
+}

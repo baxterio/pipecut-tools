@@ -1,0 +1,7 @@
+/* côte à côte, l'un sous l'autre si la place manque */
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}

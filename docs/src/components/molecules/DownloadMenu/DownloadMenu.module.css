@@ -1,0 +1,58 @@
+/* Les blocs du panneau Télécharger. Le panneau lui-même (cadre, titre, croix) est l'atome Popover. */
+
+/* Deux choix à égalité, l'un sous l'autre */
+.choices {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* une rangée de panneau (PopoverItem), aux dimensions d'un système */
+.choice {
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 12px;
+}
+
+/* icône de téléchargement corail, dans un carré de 32 px */
+.icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--color-coral-tint);
+  color: var(--color-coral);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.requirement {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-text-secondary);
+}
+
+.mentions {
+  flex: none;
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-text-tertiary);
+}

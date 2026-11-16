@@ -1,0 +1,82 @@
+/* Sans animation, le mot est entièrement vert : c'est l'état final. */
+.fill {
+  display: inline-block;
+  color: var(--color-green);
+  animation:
+    fill-in var(--seq-fill-in-for) ease-out var(--seq-fill-in-at) backwards,
+    fill-progress var(--seq-fill-for) linear var(--seq-fill-at) backwards;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .fill {
+    /*
+     * Le fond n'est peint que dans la boîte du mot : ces marges intérieures, annulées par des marges
+     * négatives, l'étendent aux jambages et au dernier caractère, qui en dépassent.
+     */
+    padding: 0.14em 0.06em;
+    margin: -0.14em -0.06em;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    /* gris des lettres non remplies, recouvert par le vert au fil du remplissage */
+    background-color: var(--color-fill-empty);
+    background-image: linear-gradient(var(--color-green), var(--color-green));
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+@keyframes fill-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.1em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * Remplissage par à-coups, sur 1 s : 0 % au départ, 6 % à 0,2 s, 30 % à 0,4 s, 36 % à 0,6 s,
+ * 72 % à 0,8 s, 88 % à 0,9 s, 100 % à 1 s. Interpolation linéaire entre chaque point.
+ */
+@keyframes fill-progress {
+  0% {
+    background-size: 0% 100%;
+  }
+  20% {
+    background-size: 6% 100%;
+  }
+  40% {
+    background-size: 30% 100%;
+  }
+  60% {
+    background-size: 36% 100%;
+  }
+  80% {
+    background-size: 72% 100%;
+  }
+  90% {
+    background-size: 88% 100%;
+  }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none;
+  }
+}
+
+/* Couleurs forcées par le système : le texte transparent serait invisible */
+@media (forced-colors: active) {
+  .fill {
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+    background: none;
+  }
+}

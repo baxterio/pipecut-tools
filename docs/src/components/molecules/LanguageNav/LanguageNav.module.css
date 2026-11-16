@@ -1,0 +1,52 @@
+/* Le titre, puis les langues sur une ligne centrée, qui passe à la ligne quand la place manque */
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* chaque lien offre une cible de 44 px de haut (règles d'Apple) */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: 0 12px;
+  border-radius: var(--radius-control);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.link:hover {
+  background: var(--color-ghost-hover);
+  color: var(--color-text);
+}
+
+/* la langue de la page */
+.link[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 600;
+}
